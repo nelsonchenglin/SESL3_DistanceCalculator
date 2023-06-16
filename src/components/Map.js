@@ -77,11 +77,15 @@ const Map = () => {
             const newMarker1 = L.marker(location1, {
               icon: markerIcon,
             }).addTo(map);
-            newMarker1.bindTooltip("Point A").openTooltip();
+            newMarker1
+              .bindTooltip("Point A", { permanent: true })
+              .openTooltip();
             const newMarker2 = L.marker(location2, {
               icon: markerIcon,
             }).addTo(map);
-            newMarker2.bindTooltip("Point B").openTooltip();
+            newMarker2
+              .bindTooltip("Point B", { permanent: true })
+              .openTooltip();
             setMarker1(newMarker1);
             setMarker2(newMarker2);
 
