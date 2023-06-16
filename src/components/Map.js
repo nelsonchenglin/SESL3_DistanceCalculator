@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
 import axios from "axios";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import SearchBar from "./SearchBar";
@@ -23,8 +22,8 @@ const Map = () => {
   const [marker2, setMarker2] = useState(null);
   const [search, setSearch] = useState("90, 0");
 
+  //leaflet map
   useEffect(() => {
-    // Initialize Leaflet map when component mounts
     const leafletMap = L.map("map").setView([0, 0], 1);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -34,34 +33,6 @@ const Map = () => {
 
     setMap(leafletMap);
   }, []);
-
-  useEffect(() => {
-    if (map) {
-      // Initialize geocoder
-      const provider = new OpenStreetMapProvider();
-
-      // Function to geocode and add marker to the map
-      const geocodeAndAddMarker = (location) => {
-        provider
-          .search({ query: location, language: "en" }) // Set language to English
-          .then((results) => {
-            if (results && results.length > 0) {
-              const { lat, lon, display_name } = results[0];
-              const marker = L.marker([lat, lon]).addTo(map);
-              marker.bindPopup(display_name).openPopup();
-            }
-          })
-          .catch((error) => {
-            console.log("Error geocoding location:", error);
-          });
-      };
-
-      // Geocode and add markers for the countries
-      geocodeAndAddMarker("United States");
-      geocodeAndAddMarker("Canada");
-      geocodeAndAddMarker("United Kingdom");
-    }
-  }, [map]);
 
   const calculateDistance = () => {
     // Remove previous markers
@@ -106,16 +77,16 @@ const Map = () => {
             const newMarker1 = L.marker(location1, {
               icon: markerIcon,
             }).addTo(map);
+            newMarker1.bindTooltip("Point A").openTooltip();
             const newMarker2 = L.marker(location2, {
               icon: markerIcon,
             }).addTo(map);
+            newMarker2.bindTooltip("Point B").openTooltip();
             setMarker1(newMarker1);
             setMarker2(newMarker2);
 
-            // Calculate the distance
+            // calculate and show distance
             var calculatedDistance = location1.distanceTo(location2) / 1000; // Convert to kilometers
-
-            // Display the distance
             setDistance(calculatedDistance.toFixed(2) + " km");
           })
           .catch(function (error) {
@@ -128,7 +99,6 @@ const Map = () => {
   };
 
   const handleSearch = (location) => {
-    // Geocode the location and perform any necessary actions
     axios
       .get("https://nominatim.openstreetmap.org/search", {
         params: {
