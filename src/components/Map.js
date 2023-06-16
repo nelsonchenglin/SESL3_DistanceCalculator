@@ -21,7 +21,7 @@ const Map = () => {
   const [map, setMap] = useState(null);
   const [marker1, setMarker1] = useState(null);
   const [marker2, setMarker2] = useState(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("90, 0");
 
   useEffect(() => {
     // Initialize Leaflet map when component mounts
@@ -158,9 +158,13 @@ const Map = () => {
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
-      {setSearch.length > 0 && <p>Coordinates: {search}</p>}
+      <p>Coordinates: {search}</p>
       <div id="map" style={{ height: "70vh", width: "70vw" }}></div>
       <div>
+        <p>
+          Use latitude values between -90 to 90. Use longitude values between
+          -180 to 180. Values outside these ranges may cause inaccuracies.
+        </p>
         <label htmlFor="location1">Location 1 (Latitude, Longitude): </label>
         <input
           type="text"
@@ -184,7 +188,9 @@ const Map = () => {
       </div>
       <div>
         <button onClick={calculateDistance}>Calculate Distance</button>
-        <p id="result">Distance: {distance}</p>
+        <p id="result" style={{ fontWeight: "bold" }}>
+          Distance: {distance}
+        </p>
       </div>
     </div>
   );

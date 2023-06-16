@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const SearchBar = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("North Pole");
 
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
