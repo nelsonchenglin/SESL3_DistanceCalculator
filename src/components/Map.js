@@ -67,9 +67,11 @@ const Map = () => {
     // Remove previous markers
     if (marker1) {
       map.removeLayer(marker1);
+      setMarker1(null);
     }
     if (marker2) {
       map.removeLayer(marker2);
+      setMarker2(null);
     }
 
     // get first location coordinates
@@ -165,7 +167,7 @@ const Map = () => {
           Use latitude values between -90 to 90. Use longitude values between
           -180 to 180. Values outside these ranges may cause inaccuracies.
         </p>
-        <label htmlFor="location1">Location 1 (Latitude, Longitude): </label>
+        <label htmlFor="location1">Point A (Latitude, Longitude): </label>
         <input
           type="text"
           id="location1"
@@ -176,7 +178,7 @@ const Map = () => {
         />
       </div>
       <div>
-        <label htmlFor="location2">Location 2 (Latitude, Longitude): </label>
+        <label htmlFor="location2">Point B (Latitude, Longitude): </label>
         <input
           type="text"
           id="location2"
